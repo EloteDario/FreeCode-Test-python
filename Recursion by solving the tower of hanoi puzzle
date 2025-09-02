@@ -1,6 +1,13 @@
+NUMBER_OF_DISKS = 3
+number_of_moves = 2**NUMBER_OF_DISKS - 1
 rods = {
-    'A': list(range(3, 0, -1)),
+    'A': list(range(NUMBER_OF_DISKS, 0, -1)),
     'B': [],
     'C': []
 }
-print(type(rods['A']))
+
+def move(n, source, auxiliary, target):
+    #initiate call from source A to target C with auxiliary B
+    print(rods)
+
+move(NUMBER_OF_DISKS, 'A', 'B', 'C')
