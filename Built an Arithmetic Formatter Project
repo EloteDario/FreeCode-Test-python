@@ -1,0 +1,65 @@
+def arithmetic_arranger(problems, show_answers=False):
+
+    linea_superior = []
+    linea_inferior = []
+    linea_de_guiones = []
+    linea_de_resultados = []
+    
+    alphabet = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t","u", "v", "w", "x", "y", "z")
+
+
+    if len(problems) > 5:
+        return 'Error: Too many problems.'
+
+    for problem in problems:
+        part = problem.split()
+        num1 = part[0]
+        operator = part[1]
+        num2 = part[2]
+
+
+        if operator not in ("+", "-"):
+            return "Error: Operator must be '+' or '-'."
+
+        if any(char.isalpha() for char in problem):
+            return 'Error: Numbers must only contain digits.'
+
+        if len(num1) > 4 or len(num2) > 4:
+            return 'Error: Numbers cannot be more than four digits.'
+        
+
+
+
+        ancho = max(len(num1), len(num2)) + 2
+
+        espacios_superiores = " " * (ancho - len(num1))
+        linea_superior.append(espacios_superiores + num1)
+
+        espacios_inferiores = " " * (ancho - len(num2) - 2)
+        linea_inferior.append(operator + ' ' + espacios_inferiores + num2)
+
+        linea_de_guiones.append('-' * ancho)
+
+        if show_answers:
+            if operator == "+":
+                resultado = int(num1) + int(num2)
+            else:
+                resultado = int(num1) - int(num2)
+
+            resultado_str = str(resultado)
+            espacios_resultado = " " * (ancho - len(resultado_str))
+            linea_de_resultados.append(espacios_resultado + resultado_str)
+
+    primera_linea_final = '    '.join(linea_superior)
+    segunda_linea_final = '    '.join(linea_inferior)
+    tercera_linea_final = '    '.join(linea_de_guiones)
+
+    arranged_problems = f"{primera_linea_final}\n{segunda_linea_final}\n{tercera_linea_final}"
+        
+    if show_answers:
+        cuarta_linea_final = '    '.join(linea_de_resultados)
+        arranged_problems += f"\n{cuarta_linea_final}"
+
+    return arranged_problems
+
+print(arithmetic_arranger(["32 - 698", "1 - 3801", "45 + 43", "123 + 49", "988 + 40"], True))
