@@ -1,0 +1,26 @@
+def add_time(start, duration):
+    hora_y_minutos, tiempo = start.split()
+
+    hora = int(hora_y_minutos.split(':')[0])
+    minutos_start = int(hora_y_minutos.split(':')[1])
+    
+    if tiempo == "PM" and hora != 12:
+        hora += 12
+    elif tiempo == "AM" and hora == 12:
+        hora = 0 
+
+
+
+    horas_d = int(duration.split(':')[0])
+    minutos_d = int(duration.split(':')[1])
+
+    horas_total = hora + horas_d
+    minutos_total = minutos_start + minutos_d
+
+    horas_extras_por_minutos = minutos_total // 60
+    minutos_finales = minutos_total % 60
+
+    horas_finales += horas_extras_por_minutos 
+
+    return new_time
+
