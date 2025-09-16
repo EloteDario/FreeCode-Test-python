@@ -1,6 +1,6 @@
-def add_time(start, duration):
+def add_time(start, duration, day_of_week=None):
+  
     hora_y_minutos, tiempo = start.split()
-
     hora = int(hora_y_minutos.split(':')[0])
     minutos_start = int(hora_y_minutos.split(':')[1])
     
@@ -14,13 +14,80 @@ def add_time(start, duration):
     horas_d = int(duration.split(':')[0])
     minutos_d = int(duration.split(':')[1])
 
-    horas_total = hora + horas_d
     minutos_total = minutos_start + minutos_d
 
     horas_extras_por_minutos = minutos_total // 60
     minutos_finales = minutos_total % 60
 
-    horas_finales += horas_extras_por_minutos 
+    horas_total = hora + horas_d + horas_extras_por_minutos
+
+    nueva_hora_24 = horas_total % 24
+    dias_pasados = horas_total // 24
+
+
+    #Poner en formato PM/AM
+
+    if nueva_hora_24 == 0:
+        nueva_hora = 12
+        nuevo_tiempo = "AM"
+    
+    elif nueva_hora_24 == 12:
+        nueva_hora = 12
+        nuevo_tiempo = "PM"
+    
+    elif nueva_hora_24 > 12:
+        nueva_hora = nueva_hora_24 - 12
+        nuevo_tiempo = "PM"
+
+    else:
+        nueva_hora = nueva_hora_24
+        nuevo_tiempo = "AM"
+        
+    minutos_finales_str = str(minutos_finales).zfill(2)
+
+    #Calcular dia o dias pasados
+    cadena_dias = ""
+    if dias_pasados == 1:
+        cadena_dias  = " (next day)"
+    
+    elif dias_pasados >= 2:
+        cadena_dias = f" ({dias_pasados} days later)"
+    
+    new_time = str(nueva_hora) + ":"+ minutos_finales_str + " " +nuevo_tiempo + cadena_dias
+
+    #Si se a puesto el parametro opcional
+    cadena_dia_semana = ""
+
+    if day_of_week != None:
+
+        dias_semana = [
+            "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"
+            ]
+
+        dia_inicial_lower = day_of_week.lower()
+    
+        for i in range(7):
+            if dia_inicial_lower == dias_semana[i]:
+                indice = i 
+        
+        indice += dias_pasados
+        if indice > 7:
+            indice = indice % 7 
+
+        dias_finalesw = dias_semana[indice].capitalize()
+        
+        dias_finales = dias_semana[indice].capitalize() + cadena_dias
+
+        dias_finalesss = dias_semana[indice].capitalize() + " " + "("  + str(dias_pasados) + " " + "days later" + ")"
+        if dias_pasados > 1:
+            
+
+            new_time = str(nueva_hora) + ":"+ minutos_finales_str + " "+ str(nuevo_tiempo) + "," + " " + dias_finalesss
+        elif dias_pasados == 1:
+            new_time = str(nueva_hora) + ":"+ minutos_finales_str + " "+ str(nuevo_tiempo) + "," + " " + "Sunday (next day)"
+        else:
+            new_time = str(nueva_hora) + ":"+ minutos_finales_str + " "+ str(nuevo_tiempo) + "," + " " + str(dias_finalesw)
 
     return new_time
 
+print(add_time('2:59 AM', '24:00', 'saturDay'))
