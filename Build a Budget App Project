@@ -20,7 +20,7 @@ class Category:
         
         return True
     
-    def withdraw(self, amount, description):
+    def withdraw(self, amount, description=""):
         if self.check_funds(amount):
             self.ledger.append({"amount": -amount, "description": description})
 
@@ -32,10 +32,10 @@ class Category:
             self.withdraw(amount, f"Transfer to {destination_category.name}")
 
             destination_category.deposit(amount, f"Transfer from {self.name}")
-        return True    
+            return True    
 
 
-    return False
+        return False
     
     def __str__(self):
         title = f"{self.name:*^30}\n"
@@ -63,4 +63,60 @@ class Category:
 
 
 def create_spend_chart(categories):
-    pass
+    gasto_de_cada_categoria = []
+    for categoria in categories:
+        gasto = 0
+        for item in categoria.ledger:
+            if item["amount"] < 0:
+                gasto += abs(item["amount"])
+        gasto_de_cada_categoria.append(gasto)
+
+    total_spent = sum(gasto_de_cada_categoria)
+    
+    percentages = []
+    if total_spent == 0:
+        percentages = [0] * len(gasto_de_cada_categoria)
+    else:
+        for spent in gasto_de_cada_categoria:
+            percentage = (spent / total_spent) * 100
+            percentages.append(int(percentage // 10) * 10)
+
+    
+    titulo = "Percentage spent by category\n"
+    chart = ""
+    for i in range(100, -1, -10):
+        chart += str(i).rjust(3) + "| " 
+        for p in percentages:
+            if p >= i:
+                chart += "o  " 
+            else:
+                chart += "   " 
+        chart += "\n"
+    
+    
+    dashes = "    " + "-" * (len(categories) * 3 + 1) + "\n"
+    
+    names = []
+    max_len = 0
+    for category in categories:
+        names.append(category.name)
+        if len(category.name) > max_len:
+            max_len = len(category.name)
+
+    category_names = ""
+    for i in range(max_len):
+        category_names += "     " 
+        for name in names:
+            if i < len(name):
+                category_names += name[i] + "  " 
+            else:
+                category_names += "   " 
+        if i < max_len - 1:
+            category_names += "\n"
+
+    return titulo + chart + dashes + category_names
+
+        
+
+            
+
