@@ -50,7 +50,7 @@ class LinearEquation(Equation):
     def solve(self):
         a, b = self.coefficients.values()
         x = -b / a
-        return x
+        return [x]
 
     def analyze(self):
         slope, intercept = self.coefficients.values()
@@ -70,14 +70,23 @@ class QuadraticEquation(Equation):
         a, b, _ = self.coefficients.values()
         x1 = (-b + (self.delta) ** 0.5) / (2 * a)
         x2 = (-b - (self.delta) ** 0.5) / (2 * a)
+        if self.delta == 0:
+            return [x1]
+
         return [x1, x2]
 
     def analyze(self):
-        pass
-
-
+        a, b, c = self.coefficients.values()
+        x = -b / (2 * a)
+        y = a * x**2 + b * x + c
+        if a > 0:
+            concavity = 'upwards'
+            min_max = 'min'
+        else:
+            concavity = 'downwards'
+            min_max = 'max'
+        return {'x': x, 'y': y, 'min_max': min_max, 'concavity': concavity}
+def solver(equation):
+    pass
 lin_eq = LinearEquation(2, 3)
-print(lin_eq)
-quadr_eq = QuadraticEquation(-11, -1, 1)
-print(quadr_eq)
-print(quadr_eq.solve())
+quadr_eq = QuadraticEquation(1, 2, 1)
