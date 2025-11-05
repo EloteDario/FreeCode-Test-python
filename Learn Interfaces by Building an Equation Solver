@@ -4,6 +4,7 @@ import re
 
 class Equation(ABC):
     degree: int
+    type: str
   
     def __init__(self, *args):
         if (self.degree + 1) != len(args):
@@ -20,6 +21,10 @@ class Equation(ABC):
         if not hasattr(cls, "degree"):
             raise AttributeError(
                 f"Cannot create '{cls.__name__}' class: missing required attribute 'degree'"
+            )
+        if not hasattr(cls, "type"):
+            raise AttributeError(
+                f"Cannot create '{cls.__name__}' class: missing required attribute 'type'"
             )
 
     def __str__(self):
@@ -43,9 +48,11 @@ class Equation(ABC):
     @abstractmethod
     def analyze(self):
         pass
-        
+
+
 class LinearEquation(Equation):
     degree = 1
+    type = 'Linear Equation'
     
     def solve(self):
         a, b = self.coefficients.values()
@@ -56,8 +63,10 @@ class LinearEquation(Equation):
         slope, intercept = self.coefficients.values()
         return {'slope': slope, 'intercept': intercept}
 
+
 class QuadraticEquation(Equation):
     degree = 2
+    type = 'Quadratic Equation'
 
     def __init__(self, *args):
         super().__init__(*args)
@@ -86,7 +95,19 @@ class QuadraticEquation(Equation):
             concavity = 'downwards'
             min_max = 'max'
         return {'x': x, 'y': y, 'min_max': min_max, 'concavity': concavity}
+
+
 def solver(equation):
-    pass
+    if not isinstance(equation, Equation):
+        raise TypeError("Argument must be an Equation object")
+    output_string = f'\n{equation.type:-^24}'
+    output_string += f'\n\n{equation!s:^24}\n\n'
+    output_string += f'{"Solutions":-^24}\n\n'
+    results = equation.solve()
+    
+    return output_string
+
 lin_eq = LinearEquation(2, 3)
 quadr_eq = QuadraticEquation(1, 2, 1)
+print(solver(lin_eq))
+
