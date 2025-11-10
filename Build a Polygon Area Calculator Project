@@ -1,0 +1,48 @@
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def set_width(self, nuevo_ancho):
+        self.width = nuevo_ancho
+
+    def set_height(self, nuevo_alto):
+        self.height = nuevo_alto
+
+    def get_area(self):
+        return self.width * self.height
+
+    def get_perimeter(self):
+        return 2 * self.width + 2 * self.height
+
+    def get_diagonal(self):
+        return (self.width ** 2 + self.height ** 2) ** .5
+
+    def get_picture(self):
+        if self.width > 50 or self.height > 50:
+            return 'Too big for picture.'
+
+        asteriscos = "*" * self.width
+
+        picture = ""
+        for i in range(self.height):
+            picture += f"{asteriscos}\n"
+        
+        return picture
+
+
+
+    def get_amount_inside(self, otra_forma):
+        otro_ancho = otra_forma.width
+        otro_largo = otra_forma.height
+
+        anchocaben = self.width//otro_ancho
+        largocaben = self.height//otro_largo 
+
+        return ancho_caben * largo_caben
+
+    def __str__(self):
+        return f"Rectangle(width={self.width}, height={self.height})"
+
+class Square:
+    pass
