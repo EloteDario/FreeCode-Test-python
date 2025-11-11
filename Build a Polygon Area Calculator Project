@@ -36,13 +36,32 @@ class Rectangle:
         otro_ancho = otra_forma.width
         otro_largo = otra_forma.height
 
-        anchocaben = self.width//otro_ancho
-        largocaben = self.height//otro_largo 
+        ancho_caben = self.width//otro_ancho
+        largo_caben = self.height//otro_largo 
 
         return ancho_caben * largo_caben
 
     def __str__(self):
         return f"Rectangle(width={self.width}, height={self.height})"
 
-class Square:
-    pass
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+        
+
+
+    def set_side(self, nuevo_lado):
+        self.width = nuevo_lado
+        self.height = nuevo_lado
+
+    def set_width(self, nuevo_ancho):
+        self.width = nuevo_ancho
+        self.height = nuevo_ancho
+    
+
+    def set_height(self, nuevo_alto):
+        self.width = nuevo_alto
+        self.height = nuevo_alto
+
+    def __str__(self):
+        return f"Square(side={self.width})"
