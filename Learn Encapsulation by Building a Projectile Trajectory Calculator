@@ -12,7 +12,6 @@ class Projectile:
         self.__speed = speed
         self.__height = height
         self.__angle = math.radians(angle)
-        
     def __str__(self):
         return f'''
 Projectile details:
@@ -47,12 +46,28 @@ displacement: {round(self.__calculate_displacement(), 1)} m
         ]
 
     @property
-    def speed(self):
-        
-        return self.__speed
+    def height(self):
+        return self.__height
 
-n = Projectile(20, 5, 30)
-print(n.speed)
+    @property
+    def angle(self):
+        return round(math.degrees(self.__angle))
+
+    @property
+    def speed(self):
+        return self.__speed
+    
+    @height.setter
+    def height(self, n):
+        self.__height = n
+
+    @angle.setter
+    def angle(self, n):
+        self.__angle = math.radians(n)
+
+    @speed.setter
+    def speed(self, s):
+       self.__speed = s
 
 ball = Projectile(10, 3, 45)
 print(ball)
