@@ -90,16 +90,20 @@ class Graph:
         return table
 
     def create_trajectory(self):
-        rounded_coords = []
-        for x, y in self.__coordinates:
-            rounded_coords.append((x, round(y)))
-        return rounded_coords
         
+        rounded_coords = [(round(x), round(y)) for x,y in self.__coordinates]
+        
+        x_max = max(rounded_coords, key=lambda i: i[0])[0]
+        y_max = max(rounded_coords, key=lambda j: j[1])[1]
+        
+        matrix_list = [[' ' for _ in range(x_max + 1)] for _ in range(y_max + 1)]
 
+        return matrix_list
+        
 ball = Projectile(10, 3, 45)
 print(ball)
 coordinates = ball.calculate_all_coordinates()
 graph = Graph(coordinates)
-
-print(graph.create_trajectory())
+for i in graph.create_trajectory():
+    print(i)
 
