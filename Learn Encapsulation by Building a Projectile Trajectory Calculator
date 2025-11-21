@@ -103,12 +103,15 @@ class Graph:
 
         matrix = ["".join(line) for line in matrix_list]
 
-        return matrix
+        matrix_axes = [y_axis_tick + row for row in matrix]
+        matrix_axes.append(" " + x_axis_tick * (len(matrix[0])))
+
+        return matrix_axes
+
 
 ball = Projectile(10, 3, 45)
 print(ball)
 coordinates = ball.calculate_all_coordinates()
 graph = Graph(coordinates)
-for row in graph.create_trajectory():
-    print(row) 
+print(graph.create_trajectory())
    
