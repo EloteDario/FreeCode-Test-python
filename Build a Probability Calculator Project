@@ -1,0 +1,46 @@
+import copy
+import random
+
+class Hat:
+    
+    def __init__(self, **kwargs):
+        # Inicializa el sombrero con una lista de todas las bolas.  Ejemplo: ['red', 'red', 'blue']
+        diccionario_de_sombreros = kwargs
+        self.contents = []
+
+        for color, cantidad in diccionario_de_sombreros.items():
+            for iteracion in range(cantidad):
+                self.contents.append("color")
+        
+        
+
+
+    def draw(self, num_balls_drawn):
+        # Extrer un número de bolas al azar sin reemplazo eliminandolas de self.contents
+        if num_balls_drawn > len(self.contents):
+            resultado = self.contents.copy()
+            self.contents = []
+            
+            return resultado
+
+        resultado = random.sample(self.contents, num_balls_drawn)
+
+        for bola in resultado:
+            self.contents.remove(bola)
+
+        return resultado
+
+
+def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
+    #La función experiment debe simular el proceso de sacar bolas muchas veces para estimar la probabilidad.
+    pass
+
+    # Clonar el sombrero para que cada experimento comience con el estado inicial.
+
+
+
+    # Verificar si la extracción cumple con los requisitos de expected_balls (al menos X de cada color).
+
+
+
+    # Calcular la probabilidad aproximada: Éxitos / Total de Experimentos.
